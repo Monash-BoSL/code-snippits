@@ -1,0 +1,1 @@
+Tipping Bucket Rain Gauge for HT DN 110 pipe by suromark on Thingiverse: https://www.thingiverse.com/thing:3747090
