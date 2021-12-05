@@ -9,7 +9,7 @@
 
 #define TRIG 50//change in analog read needed for trigger
 
-#define SAMPLE_TIME 4// number of seconds to measure rain sensor in one sample
+#define SAMPLE_TIME 60// number of seconds to measure rain sensor in one sample !!!change this to the number you need!!!
 
 //millis timer variable 
 extern volatile unsigned long timer0_millis;
@@ -30,19 +30,19 @@ void loop() {
 	uint32_t edges = count_edges(SAMPLE_TIME);
 	Serial.print(edges);
 	Serial.print(F(" flips over "));
-	Serial.print(SAMPLE_TIME);
-	Serial.print(F("s. Frequency: "));
-	Serial.print((float)edges/((float)SAMPLE_TIME));
-	Serial.println(F(" flips/s"));
+	Serial.println(SAMPLE_TIME);
 	Serial.flush();
 }
 
-
+int16_t l_mag = -1;
+int8_t rising = -1;
 uint32_t count_edges(uint32_t time_s){
 	uint32_t time_ms = 1000*time_s;
 	uint32_t edge_count = 0;
 	uint32_t tik = millis();
 	uint32_t sdel = 160;
+	l_mag = -1;
+	rising = -1;
 	while(millis()-tik < time_ms){
 		digitalWrite(HALL_PWR, HIGH);
 		delayMicroseconds(100);
@@ -58,8 +58,7 @@ uint32_t count_edges(uint32_t time_s){
 }
 
 
-int16_t l_mag = -1;
-int8_t rising = -1;
+
 uint8_t is_edge(int16_t mag){
 	if(l_mag == -1){
 		l_mag = mag;
